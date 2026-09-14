@@ -10,7 +10,11 @@
                 "${workspaceFolder}/build/_deps/googletest-src/googlemock/include",
                 "/usr/include/x86_64-linux-gnu/qt6",
                 "/usr/include/x86_64-linux-gnu/qt6/QtCore",
-                "/usr/include/x86_64-linux-gnu/qt6/QtNetwork"
+                "/usr/include/x86_64-linux-gnu/qt6/QtNetwork",
+                "/usr/include/x86_64-linux-gnu/qt6/QtWidgets",
+                "/usr/include/x86_64-linux-gnu/qt6/QtGui",
+                "/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++",
+                "${workspaceFolder}/build/client/flight-client_autogen/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang-18",
