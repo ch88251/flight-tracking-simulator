@@ -20,3 +20,9 @@ target_link_libraries(flight-common PUBLIC Qt6::Core Qt6::Network)
 
 add_subdirectory(server)
 add_subdirectory(client)
+
+option(BUILD_TESTING "Build unit tests" ON)
+if(BUILD_TESTING)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
