@@ -134,24 +134,5 @@ void FlightSimulator::tick()
     updateFlight(i);
   }
   emit flightsUpdated();
-  printFlights();
 }
 
-void FlightSimulator::printFlights() const
-{
-  QTextStream out(stdout);
-  out << "\n=== Tick " << m_tickCount << " ===\n";
-  out << qSetFieldWidth(9) << "Flight" << qSetFieldWidth(13) << "Status" << qSetFieldWidth(12) << "Lat"
-      << qSetFieldWidth(12) << "Lon" << qSetFieldWidth(10) << "Alt(ft)" << qSetFieldWidth(9) << "Hdg"
-      << qSetFieldWidth(9) << "Spd(kt)" << qSetFieldWidth(0) << "\n";
-
-  for (const Flight &flight : m_flights) {
-    out << qSetFieldWidth(9) << flight.callsign() << qSetFieldWidth(13) << flightStatusToString(flight.status())
-        << qSetFieldWidth(12) << QString::number(flight.latitude(), 'f', 4) << qSetFieldWidth(12)
-        << QString::number(flight.longitude(), 'f', 4) << qSetFieldWidth(10)
-        << QString::number(flight.altitudeFt(), 'f', 0) << qSetFieldWidth(9)
-        << QString::number(flight.headingDeg(), 'f', 1) << qSetFieldWidth(9)
-        << QString::number(flight.groundSpeedKts(), 'f', 1) << qSetFieldWidth(0) << "\n";
-  }
-  out.flush();
-}
