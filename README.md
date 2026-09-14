@@ -20,7 +20,7 @@ tests/     GoogleTest unit tests for the common model and the simulator
 
 - CMake 3.16+
 - A C++17 compiler
-- Qt6 (`Core`, `Network`, and `Widgets` for the client)
+- Qt6 (`Core`, `Network`, `WebSockets`, and `Widgets` for the client)
 
 ## Building
 
@@ -51,8 +51,10 @@ to stdout once per second:
 
 Press `Ctrl+C` to stop it.
 
-The client (`./build/client/flight-client`) is a Qt Widgets GUI that is
-still under active development.
+The client (`./build/client/flight-client`) connects to the server at
+`ws://127.0.0.1:4500` with `QWebSocket` and reports connection status and
+received flight updates. The server accepts clients with `QWebSocketServer`
+and broadcasts the serialized flight list after each simulator tick.
 
 ## Running the tests
 

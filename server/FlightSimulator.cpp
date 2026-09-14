@@ -133,6 +133,7 @@ void FlightSimulator::tick()
   for (int i = 0; i < m_flights.size(); ++i) {
     updateFlight(i);
   }
+  emit flightsUpdated();
   printFlights();
 }
 

@@ -11,6 +11,7 @@
                 "/usr/include/x86_64-linux-gnu/qt6",
                 "/usr/include/x86_64-linux-gnu/qt6/QtCore",
                 "/usr/include/x86_64-linux-gnu/qt6/QtNetwork",
+                "/usr/include/x86_64-linux-gnu/qt6/QtWebSockets",
                 "/usr/include/x86_64-linux-gnu/qt6/QtWidgets",
                 "/usr/include/x86_64-linux-gnu/qt6/QtGui",
                 "/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++",

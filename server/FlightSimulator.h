@@ -17,6 +17,9 @@ public:
 public slots:
     void tick();
 
+signals:
+    void flightsUpdated();
+
 private:
     void seedFlights();
     void updateFlight(int index);
