@@ -4,24 +4,26 @@
 
 enum class FlightStatus {
     Scheduled,
-    Boarding,
-    Departed,
-    EnRoute,
-    Landed,
-    Delayed,
-    Cancelled
+    Taxiing,
+    TakingOff,
+    Climbing,
+    Cruising,
+    Descending,
+    Landing,
+    Landed
 };
 
 inline QString flightStatusToString(FlightStatus status)
 {
   switch(status) {
     case FlightStatus::Scheduled: return QStringLiteral("Scheduled");
-    case FlightStatus::Boarding: return QStringLiteral("Boarding");
-    case FlightStatus::Departed: return QStringLiteral("Departed");
-    case FlightStatus::EnRoute: return QStringLiteral("EnRoute");
+    case FlightStatus::Taxiing: return QStringLiteral("Taxiing");
+    case FlightStatus::TakingOff: return QStringLiteral("TakingOff");
+    case FlightStatus::Climbing: return QStringLiteral("Climbing");
+    case FlightStatus::Cruising: return QStringLiteral("Cruising");
+    case FlightStatus::Descending: return QStringLiteral("Descending");
+    case FlightStatus::Landing: return QStringLiteral("Landing");
     case FlightStatus::Landed: return QStringLiteral("Landed");
-    case FlightStatus::Delayed: return QStringLiteral("Delayed");
-    case FlightStatus::Cancelled: return QStringLiteral("Cancelled");
   }
 
   return QStringLiteral("Unknown");
@@ -29,12 +31,13 @@ inline QString flightStatusToString(FlightStatus status)
 
 inline FlightStatus flightStatusFromString(const QString &value)
 {
-  if (value == QStringLiteral("Boarding")) return FlightStatus::Boarding;
-  if (value == QStringLiteral("Departing")) return FlightStatus::Departing;
-  if (value == QStringLiteral("EnRoute")) return FlightStatus::EnRoute;
+  if (value == QStringLiteral("Taxiing")) return FlightStatus::Taxiing;
+  if (value == QStringLiteral("TakingOff")) return FlightStatus::TakingOff;
+  if (value == QStringLiteral("Climbing")) return FlightStatus::Climbing;
+  if (value == QStringLiteral("Cruising")) return FlightStatus::Cruising;
+  if (value == QStringLiteral("Descending")) return FlightStatus::Descending;
+  if (value == QStringLiteral("Landing")) return FlightStatus::Landing;
   if (value == QStringLiteral("Landed")) return FlightStatus::Landed;
-  if (value == QStringLiteral("Delayed")) return FlightStatus::Delayed;
-  if (value == QStringLiteral("Cancelled")) return FlightStatus::Cancelled;
 
   return FlightStatus::Scheduled;
 }

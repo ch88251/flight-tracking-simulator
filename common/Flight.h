@@ -1,5 +1,6 @@
 #pragma once
 #include <QString>
+#include <QJsonObject>
 #include "FlightStatus.h"
 
 class Flight {
@@ -36,6 +37,9 @@ public:
 
     FlightStatus status() const;
     void setStatus(const FlightStatus &status);
+
+    QJsonObject toJson() const;
+    static Flight fromJson(const QJsonObject &json);
 
 private:
     QString m_id;
