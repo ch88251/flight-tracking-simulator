@@ -32,8 +32,20 @@ public:
     void setHeadingDeg(double headingDeg);
 
     double groundSpeedKts() const;
-    void setGroundSpeedKts(double groundSpeedKt);
+    void setGroundSpeedKts(double groundSpeedKts);
 
     FlightStatus status() const;
     void setStatus(const FlightStatus &status);
+
+private:
+    QString m_id;
+    QString m_callsign;
+    QString m_origin;
+    QString m_destination;
+    double m_latitude = 0.0;
+    double m_longitude = 0.0;
+    double m_altitudeFt = 0.0;
+    double m_headingDeg = 0.0;
+    double m_groundSpeedKts = 0.0;
+    FlightStatus m_status = FlightStatus::Scheduled;
 };

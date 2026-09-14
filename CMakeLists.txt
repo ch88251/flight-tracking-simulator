@@ -14,8 +14,6 @@ add_library(flight-common STATIC
     common/Flight.h
     common/Flight.cpp
     common/FlightStatus.h
-    common/FlightMessage.h
-    common/FlightSerializer.cpp
 )
 target_include_directories(flight-common PUBLIC common)
 target_link_libraries(flight-common PUBLIC Qt6::Core Qt6::Network)
