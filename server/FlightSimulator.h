@@ -23,7 +23,6 @@ signals:
 private:
     void seedFlights();
     void updateFlight(int index);
-    void printFlights() const;
 
     QVector<Flight> m_flights;
     QVector<double> m_cruiseAltitudesFt;
