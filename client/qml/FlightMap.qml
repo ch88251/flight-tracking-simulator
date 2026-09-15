@@ -47,7 +47,9 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "✈"
                         font.pixelSize: 22
-                        rotation: model.headingDeg
+                        // The glyph's default orientation points east (90°), not north,
+                        // so headings must be offset by -90 to align with compass bearing.
+                        rotation: model.headingDeg - 90
                         transformOrigin: Item.Center
 
                         MouseArea {
