@@ -1,11 +1,12 @@
 #pragma once
 
-#include <QJsonArray>
 #include <QMainWindow>
 
 class FlightClient;
+class FlightTableModel;
 class QLabel;
-class QTableWidget;
+class QTableView;
+class QQuickWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -16,11 +17,12 @@ public:
 
 private slots:
   void updateStatus(const QString &message);
-  void updateFlights(const QJsonArray &flights);
   void reconnect();
 
 private:
   FlightClient *m_client = nullptr;
+  FlightTableModel *m_flightModel = nullptr;
   QLabel *m_statusLabel = nullptr;
-  QTableWidget *m_flightsTable = nullptr;
+  QTableView *m_flightsTable = nullptr;
+  QQuickWidget *m_mapView = nullptr;
 };
