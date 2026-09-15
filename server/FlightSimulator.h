@@ -14,6 +14,9 @@ public:
 
     const QVector<Flight> &flights() const;
 
+    double speedMultiplier() const;
+    void setSpeedMultiplier(double multiplier);
+
 public slots:
     void tick();
 
@@ -28,4 +31,5 @@ private:
     QVector<double> m_cruiseAltitudesFt;
     QTimer m_timer;
     int m_tickCount = 0;
+    double m_speedMultiplier = 1.0;
 };

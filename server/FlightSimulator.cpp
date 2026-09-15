@@ -12,6 +12,8 @@ constexpr double kMaxHeadingJitterDeg = 1.5;
 constexpr double kMaxSpeedJitterKts = 3.0;
 constexpr double kMinSpeedKts = 150.0;
 constexpr double kMaxSpeedKts = 550.0;
+constexpr double kMinSpeedMultiplier = 0.1;
+constexpr double kMaxSpeedMultiplier = 20.0;
 
 double jitter(double magnitude)
 {
@@ -34,6 +36,16 @@ void FlightSimulator::start(int intervalMs)
 const QVector<Flight> &FlightSimulator::flights() const
 {
   return m_flights;
+}
+
+double FlightSimulator::speedMultiplier() const
+{
+  return m_speedMultiplier;
+}
+
+void FlightSimulator::setSpeedMultiplier(double multiplier)
+{
+  m_speedMultiplier = qBound(kMinSpeedMultiplier, multiplier, kMaxSpeedMultiplier);
 }
 
 void FlightSimulator::seedFlights()
@@ -85,20 +97,20 @@ void FlightSimulator::updateFlight(int index)
 
   switch (flight.status()) {
     case FlightStatus::TakingOff:
-      flight.setAltitudeFt(flight.altitudeFt() + kClimbRateFtPerSec);
+      flight.setAltitudeFt(flight.altitudeFt() + kClimbRateFtPerSec * m_speedMultiplier);
       if (flight.altitudeFt() >= 3000.0) {
         flight.setStatus(FlightStatus::Climbing);
       }
       break;
     case FlightStatus::Climbing:
-      flight.setAltitudeFt(flight.altitudeFt() + kClimbRateFtPerSec);
+      flight.setAltitudeFt(flight.altitudeFt() + kClimbRateFtPerSec * m_speedMultiplier);
       if (flight.altitudeFt() >= cruiseAltitudeFt) {
         flight.setAltitudeFt(cruiseAltitudeFt);
         flight.setStatus(FlightStatus::Cruising);
       }
       break;
     case FlightStatus::Descending:
-      flight.setAltitudeFt(flight.altitudeFt() - kDescentRateFtPerSec);
+      flight.setAltitudeFt(flight.altitudeFt() - kDescentRateFtPerSec * m_speedMultiplier);
       if (flight.altitudeFt() <= 0.0) {
         flight.setAltitudeFt(0.0);
         flight.setGroundSpeedKts(0.0);
@@ -118,7 +130,7 @@ void FlightSimulator::updateFlight(int index)
   speed = qBound(kMinSpeedKts, speed, kMaxSpeedKts);
   flight.setGroundSpeedKts(speed);
 
-  const double distanceNm = speed / 3600.0;
+  const double distanceNm = (speed / 3600.0) * m_speedMultiplier;
   const double headingRad = qDegreesToRadians(heading);
   const double latRad = qDegreesToRadians(flight.latitude());
 

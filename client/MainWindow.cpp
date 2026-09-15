@@ -3,6 +3,7 @@
 #include "FlightClient.h"
 #include "FlightTableModel.h"
 
+#include <QComboBox>
 #include <QHeaderView>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -32,6 +33,13 @@ MainWindow::MainWindow(FlightClient *client, QWidget *parent)
 
   m_statusLabel = new QLabel(QStringLiteral("Status: Starting..."), centralWidget);
 
+  m_speedCombo = new QComboBox(centralWidget);
+  m_speedCombo->addItem(QStringLiteral("1x"), 1.0);
+  m_speedCombo->addItem(QStringLiteral("2x"), 2.0);
+  m_speedCombo->addItem(QStringLiteral("5x"), 5.0);
+  m_speedCombo->addItem(QStringLiteral("10x"), 10.0);
+  m_speedCombo->addItem(QStringLiteral("20x"), 20.0);
+
   m_flightsTable = new QTableView(centralWidget);
   m_flightsTable->setModel(m_flightModel);
   m_flightsTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -50,6 +58,8 @@ MainWindow::MainWindow(FlightClient *client, QWidget *parent)
   tabs->addTab(m_mapView, QStringLiteral("Map"));
 
   toolbar->addWidget(m_statusLabel, 1);
+  toolbar->addWidget(new QLabel(QStringLiteral("Speed:"), centralWidget));
+  toolbar->addWidget(m_speedCombo);
   toolbar->addWidget(reconnectButton);
   layout->addLayout(toolbar);
   layout->addWidget(tabs);
@@ -58,6 +68,7 @@ MainWindow::MainWindow(FlightClient *client, QWidget *parent)
   resize(1100, 640);
 
   connect(reconnectButton, &QPushButton::clicked, this, &MainWindow::reconnect);
+  connect(m_speedCombo, &QComboBox::activated, this, &MainWindow::changeSimulationSpeed);
   connect(m_client, &FlightClient::statusMessage, this, &MainWindow::updateStatus);
   connect(m_client, &FlightClient::flightsUpdated, m_flightModel, &FlightTableModel::setFlights);
 }
@@ -70,4 +81,10 @@ void MainWindow::updateStatus(const QString &message)
 void MainWindow::reconnect()
 {
   m_client->connectToServer(kServerUrl);
+}
+
+void MainWindow::changeSimulationSpeed(int index)
+{
+  const double multiplier = m_speedCombo->itemData(index).toDouble();
+  m_client->setSimulationSpeed(multiplier);
 }

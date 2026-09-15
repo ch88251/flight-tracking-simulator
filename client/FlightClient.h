@@ -15,6 +15,7 @@ public:
 	void connectToServer(const QUrl &url);
 	void disconnectFromServer();
 	bool isConnected() const;
+	void setSimulationSpeed(double multiplier);
 
 signals:
 	void statusMessage(const QString &message);

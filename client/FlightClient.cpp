@@ -2,6 +2,7 @@
 
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QJsonObject>
 
 FlightClient::FlightClient(QObject *parent)
 	: QObject(parent)
@@ -33,6 +34,18 @@ void FlightClient::disconnectFromServer()
 bool FlightClient::isConnected() const
 {
 	return m_socket.state() == QAbstractSocket::ConnectedState;
+}
+
+void FlightClient::setSimulationSpeed(double multiplier)
+{
+	if (!isConnected()) {
+		return;
+	}
+
+	QJsonObject command;
+	command.insert(QStringLiteral("cmd"), QStringLiteral("setSpeed"));
+	command.insert(QStringLiteral("multiplier"), multiplier);
+	m_socket.sendTextMessage(QString::fromUtf8(QJsonDocument(command).toJson(QJsonDocument::Compact)));
 }
 
 void FlightClient::handleConnected()

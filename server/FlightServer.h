@@ -25,6 +25,7 @@ signals:
 private slots:
   void handleNewConnection();
   void handleDisconnected();
+  void handleTextMessage(const QString &message);
   void broadcastFlights();
 
 private:

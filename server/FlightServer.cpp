@@ -4,6 +4,8 @@
 
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QHostAddress>
 #include <QWebSocket>
 
@@ -54,6 +56,7 @@ void FlightServer::handleNewConnection()
 
   m_clients.append(client);
   connect(client, &QWebSocket::disconnected, this, &FlightServer::handleDisconnected);
+  connect(client, &QWebSocket::textMessageReceived, this, &FlightServer::handleTextMessage);
   client->sendTextMessage(serializedFlights());
   emit statusMessage(QStringLiteral("Client connected: %1").arg(client->peerAddress().toString()));
 }
@@ -68,6 +71,23 @@ void FlightServer::handleDisconnected()
   m_clients.removeAll(client);
   emit statusMessage(QStringLiteral("Client disconnected"));
   client->deleteLater();
+}
+
+void FlightServer::handleTextMessage(const QString &message)
+{
+  const QJsonDocument document = QJsonDocument::fromJson(message.toUtf8());
+  if (!document.isObject()) {
+    return;
+  }
+
+  const QJsonObject command = document.object();
+  if (command.value(QStringLiteral("cmd")).toString() != QStringLiteral("setSpeed")) {
+    return;
+  }
+
+  const double multiplier = command.value(QStringLiteral("multiplier")).toDouble(1.0);
+  m_simulator->setSpeedMultiplier(multiplier);
+  emit statusMessage(QStringLiteral("Simulation speed set to %1x").arg(m_simulator->speedMultiplier()));
 }
 
 void FlightServer::broadcastFlights()
