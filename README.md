@@ -7,6 +7,9 @@ cruise, descent, and landing. A shared `flight-common` library defines the
 `Flight` data model (with JSON serialization) used across the server and
 client.
 
+![Map View](./assets/images/map_view.png)
+![Table View](./assets/images/table_view.png)
+
 ## Project layout
 
 ```
