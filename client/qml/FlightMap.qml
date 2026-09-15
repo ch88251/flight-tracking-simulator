@@ -106,6 +106,12 @@ Item {
                                           Math.min(map.maximumZoomLevel, map.zoomLevel + zoomDelta))
             }
         }
+
+        DragHandler {
+            id: dragHandler
+            target: null
+            onTranslationChanged: (delta) => map.pan(-delta.x, -delta.y)
+        }
     }
 
     Column {
